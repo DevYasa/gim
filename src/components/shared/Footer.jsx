@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
 import { footerLinks, contactInfo, socialLinks } from '../../constants/navigation'
+import { getImagePath } from '@/utils/imageUtils'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -13,7 +14,7 @@ const Footer = () => {
           <div>
             <div className="mb-4">
               <img 
-                src="/images/logo.png" 
+                src={getImagePath("/images/logo.png")}
                 alt="Gemological Institute of Malaysia" 
                 className="h-16 w-auto"
               />

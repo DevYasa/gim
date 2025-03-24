@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { navItems } from '../../constants/navigation'
+import { getImagePath } from '@/utils/imageUtils'
 
 // Memo-ize the Navbar to prevent unnecessary re-renders
 const Navbar = memo(() => {
@@ -83,7 +84,7 @@ const Navbar = memo(() => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="/images/logo.png" 
+              src={getImagePath("/images/logo.png")}
               alt="Gemological Institute of Malaysia" 
               className="h-12 w-auto"
             />
