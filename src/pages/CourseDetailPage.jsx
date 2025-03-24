@@ -7,6 +7,7 @@ import RelatedCourses from '../components/courses/RelatedCourses'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 import { courses } from '../constants/courses'
 import SectionTitle from '../components/shared/SectionTitle'
+import { getImagePath } from '@/utils/imageUtils'
 
 const CourseDetailPage = () => {
   const { id } = useParams()
@@ -126,46 +127,7 @@ const CourseDetailPage = () => {
       
       {/* Related Courses */}
       {relatedCourses.length > 0 && (
-        <div className="bg-white py-12 md:py-16">
-          <div className="container-custom">
-            <SectionTitle 
-              title="Related Programs"
-              centered={true}
-            />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-              {relatedCourses.map((relatedCourse, index) => (
-                <motion.div
-                  key={relatedCourse.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="card card-hover"
-                >
-                  <Link to={`/courses/${relatedCourse.id}`}>
-                    <div className="relative overflow-hidden h-40">
-                      <img
-                        src={relatedCourse.image || "/images/course-placeholder.jpg"}
-                        alt={relatedCourse.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-5">
-                      <h3 className="text-lg font-medium mb-2 text-neutral-900">{relatedCourse.title}</h3>
-                      <p className="text-neutral-600 text-sm mb-4 line-clamp-2">
-                        {relatedCourse.shortDescription}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <span className="text-primary text-sm font-medium">View Program</span>
-                        <span className="text-neutral-500 text-sm">{relatedCourse.duration}</span>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <RelatedCourses courses={relatedCourses} currentCourseId={course.id} />
       )}
       
       {/* Call to Action */}
@@ -180,12 +142,12 @@ const CourseDetailPage = () => {
               Apply now to secure your place in our world-class programs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/contact" className="btn bg-white text-primary hover:bg-neutral-100">
+              <Link to="/contact" className="btn bg-white text-primary hover:bg-neutral-100">
                 Apply Now
-              </a>
-              <a href="/contact" className="btn bg-transparent border-2 border-white text-white hover:bg-white/10">
+              </Link>
+              <Link to="/contact" className="btn bg-transparent border-2 border-white text-white hover:bg-white/10">
                 Schedule a Campus Tour
-              </a>
+              </Link>
             </div>
           </div>
         </div>
