@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Gemological Institute of Malaysia (GIM) - Providing world-class education in gemology, jewelry design, and related fields since 2008." />
+    <meta name="keywords" content="gemology, jewelry design, gemstone, education, Malaysia, Harrico, precious metals, diamond grading" />
+    <meta name="author" content="GIM" />
+    <meta property="og:title" content="Gemological Institute of Malaysia" />
+    <meta property="og:description" content="World-class education in gemology, jewelry design, and related fields." />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:url" content="https://gim.edu.my" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Gemological Institute of Malaysia (GIM)</title>
+    
+    <!-- Critical CSS (inline) -->
+    <style>
+      /* Basic body styling to prevent layout shift */
+      body {
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+      
+      /* Loading indicator styles */
+      .initial-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #000000;
+        z-index: 9999;
+        transition: opacity 0.8s ease-in-out;
+      }
+      
+      .loader-logo {
+        width: 180px;
+        height: auto;
+        animation: pulse 3s infinite;
+      }
+      
+      /* Pulse animation for logo */
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.08);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      
+      /* Shimmer effect below logo */
+      .loader-shimmer {
+        width: 140px;
+        height: 3px;
+        margin-top: 25px;
+        background: linear-gradient(90deg, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.7), rgba(212, 175, 55, 0));
+        background-size: 200% 100%;
+        border-radius: 2px;
+        animation: shimmer 2.5s infinite;
+      }
+      
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+    </style>
+    
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" />
+  </head>
+  <body>
+    <!-- Initial loading indicator -->
+    <div id="initial-loader" class="initial-loader">
+      <img src="/images/logo1.png" alt="GIM Logo" class="loader-logo" />
+      <div class="loader-shimmer"></div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Add a minimum display time for the loader
+      window.addEventListener('DOMContentLoaded', function() {
+        // Ensure the loader shows for at least 2.5 seconds
+        const minimumLoadTime = 2500; // 2.5 seconds
+        const startTime = Date.now();
+        
+        window.addEventListener('load', function() {
+          const elapsedTime = Date.now() - startTime;
+          const remainingTime = Math.max(0, minimumLoadTime - elapsedTime);
+          
+          // Wait for the minimum time to pass before hiding the loader
+          setTimeout(() => {
+            const loader = document.getElementById('initial-loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+              loader.style.display = 'none';
+            }, 800); // longer fade-out time
+          }, remainingTime);
+        });
+      });
+    </script>
+  </body>
+</html>
