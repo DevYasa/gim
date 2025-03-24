@@ -1,1 +1,0 @@
-import{r as a}from"./index-BDf1Z2-t.js";const n=(e,o=!0)=>{a.useEffect(()=>{const s="GIM",t=e.includes("GIM")||e.includes("Gemological Institute of Malaysia");return document.title=o&&!t?`${e} | ${s}`:e,()=>{document.title="Gemological Institute of Malaysia (GIM)"}},[e,o])};export{n as u};
