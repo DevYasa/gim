@@ -15,6 +15,18 @@
     <meta name="twitter:card" content="summary_large_image" />
     <title>Gemological Institute of Malaysia (GIM)</title>
     
+    <!-- Script to handle paths for different environments -->
+    <script>
+      // Determine if we're on GitHub Pages or local development
+      function getBasePath() {
+        const isGitHubPages = window.location.hostname === 'devyasa.github.io';
+        return isGitHubPages ? '/gim/' : '/';
+      }
+      
+      // Set this as a global variable
+      window.basePath = getBasePath();
+    </script>
+    
     <!-- Critical CSS (inline) -->
     <style>
       /* Basic body styling to prevent layout shift */
@@ -93,13 +105,16 @@
   <body>
     <!-- Initial loading indicator -->
     <div id="initial-loader" class="initial-loader">
-      <img src="./images/logo1.png" alt="GIM Logo" class="loader-logo" />
+      <img id="loader-logo" alt="GIM Logo" class="loader-logo" />
       <div class="loader-shimmer"></div>
     </div>
     
     <div id="root"></div>
     
     <script>
+      // Set the loader logo source with the correct path
+      document.getElementById('loader-logo').src = window.basePath + 'images/logo1.png';
+      
       // Add a minimum display time for the loader
       window.addEventListener('DOMContentLoaded', function() {
         // Ensure the loader shows for at least 2.5 seconds
