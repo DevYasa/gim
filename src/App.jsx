@@ -118,6 +118,9 @@ function App() {
     return () => clearTimeout(setupObserver)
   }, [isLoaded])
 
+  // Get the base URL from the environment
+  const basename = import.meta.env.BASE_URL || '/'
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
