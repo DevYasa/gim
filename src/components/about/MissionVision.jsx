@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { getImagePath } from '@/utils/imageUtils';
 
 const MissionVision = () => {
   // Enable animations after components are visible
@@ -75,7 +76,7 @@ const MissionVision = () => {
           <div className="animate-on-scroll pre-animate img-hover-zoom rounded-lg overflow-hidden shadow-xl" 
                style={{transform: 'none'}}>
             <img 
-              src="/images/intro-gemology.png"
+              src={getImagePath("/images/intro-gemology.png")}
               alt="GIM Campus"
               className="w-full h-80 object-cover"
             />

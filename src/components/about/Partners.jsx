@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { FaCheck } from 'react-icons/fa'
+import { getImagePath } from '@/utils/imageUtils';
 
 const Partners = () => {
   const partners = [
@@ -85,11 +86,11 @@ const Partners = () => {
               }}
             >
               <div className="h-40 flex items-center justify-center mb-6 p-4 bg-neutral-100 rounded">
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  className="w-full h-full object-contain"
-                />
+              <img
+                src={getImagePath(partner.logo)}
+                alt={partner.name}
+                className="w-full h-full object-contain"
+              />
               </div>
               <h3 className="text-xl font-medium mb-3 text-neutral-900" style={{color: '#1f2937'}}>{partner.name}</h3>
               <p className="text-neutral-600 mb-4" style={{color: '#4b5563'}}>
@@ -153,12 +154,12 @@ const Partners = () => {
               </a>
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg bg-white">
-              <img
-                src="/images/partners/harrico.jpg"
-                alt="Harrico Gems & Jewels"
-                className="w-full h-auto object-cover"
-                style={{ aspectRatio: "16/9" }}
-              />
+            <img
+              src={getImagePath("/images/partners/harrico.jpg")}
+              alt="Harrico Gems & Jewels"
+              className="w-full h-auto object-cover"
+              style={{ aspectRatio: "16/9" }}
+            />
             </div>
           </div>
         </div>

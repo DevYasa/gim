@@ -2,6 +2,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { FaChevronRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { getImagePath } from '@/utils/imageUtils';
 
 const CourseDetail = ({ course }) => {
   if (!course) {
@@ -58,12 +59,12 @@ const CourseDetail = ({ course }) => {
       <div className="lg:col-span-1">
         {/* Course Image */}
         <div className="mb-8 rounded-lg overflow-hidden shadow-md">
-          <LazyLoadImage
-            src={course.image || "/images/course-placeholder.jpg"}
-            alt={course.title}
-            effect="blur"
-            className="w-full h-auto"
-          />
+        <LazyLoadImage
+          src={getImagePath(course.image || "/images/course-placeholder.jpg")}
+          alt={course.title}
+          effect="blur"
+          className="w-full h-auto"
+        />
         </div>
         
         {/* Apply Now */}

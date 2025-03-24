@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SectionTitle from '../shared/SectionTitle';
+import { getImagePath } from '@/utils/imageUtils';
 
 const RelatedCourses = ({ courses, currentCourseId }) => {
   // Filter out the current course and take up to 3 related courses
@@ -32,11 +33,11 @@ const RelatedCourses = ({ courses, currentCourseId }) => {
             >
               <Link to={`/courses/${course.id}`}>
                 <div className="relative overflow-hidden h-40">
-                  <img
-                    src={course.image || "/images/course-placeholder.jpg"}
-                    alt={course.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
+                <img
+                  src={getImagePath(course.image || "/images/course-placeholder.jpg")}
+                  alt={course.title}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
                 </div>
                 <div className="p-5">
                   <h3 className="text-lg font-medium mb-2 text-neutral-900">{course.title}</h3>

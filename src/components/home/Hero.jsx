@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaChevronDown } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
+import { getImagePath } from '@/utils/imageUtils';
 
 // Add text-shadow style to your index.css file instead of using style jsx
 // .text-shadow-lg {
@@ -14,7 +15,7 @@ const Hero = () => {
   // Pre-load the hero image
   useEffect(() => {
     const img = new Image()
-    img.src = '/images/hero-bg.jpg'
+    img.src = getImagePath('/images/hero-bg.jpg')
     img.onload = () => setImageLoaded(true)
   }, [])
   
@@ -38,7 +39,7 @@ const Hero = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
           style={{ 
-            backgroundImage: `url('/images/hero-bg.jpg')`,
+            backgroundImage: `url('${getImagePath('/images/hero-bg.jpg')}')`,
             opacity: imageLoaded ? 1 : 0
           }}
         />

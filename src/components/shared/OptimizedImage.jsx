@@ -1,21 +1,9 @@
+// src/components/shared/OptimizedImage.jsx
 import { useState, useEffect } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
+import { getImagePath } from '@/utils/imageUtils'
 
-/**
- * Optimized image component that prevents layout shifts and provides fallbacks
- * 
- * @param {Object} props
- * @param {string} props.src - Image source URL
- * @param {string} props.alt - Alt text for the image
- * @param {number} props.width - Width of the image (required for preventing layout shifts)
- * @param {number} props.height - Height of the image (required for preventing layout shifts)
- * @param {string} props.className - Additional classes for the image
- * @param {string} props.wrapperClassName - Additional classes for the wrapper
- * @param {string} props.placeholderSrc - Low-quality placeholder image
- * @param {string} props.aspectRatio - Aspect ratio of the image (e.g., "16/9", "4/3", "1/1")
- * @param {string} props.objectFit - Object-fit property for the image
- */
 const OptimizedImage = ({
   src,
   alt,
@@ -31,6 +19,10 @@ const OptimizedImage = ({
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   
+  // Process image paths for GitHub Pages
+  const processedSrc = getImagePath(src)
+  const processedPlaceholderSrc = placeholderSrc ? getImagePath(placeholderSrc) : ''
+  
   // Predefined default placeholder color
   const placeholderColor = '#e5e7eb' // Light gray
   
@@ -42,6 +34,7 @@ const OptimizedImage = ({
   
   const handleError = () => {
     setHasError(true)
+    console.error(`Failed to load image: ${processedSrc}`)
   }
   
   const handleLoaded = () => {
@@ -62,12 +55,12 @@ const OptimizedImage = ({
       >
       {!hasError ? (
         <LazyLoadImage
-          src={src}
+          src={processedSrc}
           alt={alt}
           effect="blur"
           width={width}
           height={height}
-          placeholderSrc={placeholderSrc}
+          placeholderSrc={processedPlaceholderSrc}
           onError={handleError}
           afterLoad={handleLoaded}
           className={`w-full h-full transition-opacity duration-300 ${className}`}

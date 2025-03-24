@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { getImagePath } from '@/utils/imageUtils';
 
 const History = () => {
   const timeline = [
@@ -100,13 +101,13 @@ const History = () => {
                 {/* Image */}
                 <div className="md:w-1/2 px-4 md:px-12 mt-4 md:mt-0">
                   <div className="rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={item.image}
-                      alt={`GIM ${item.year} - ${item.title}`}
-                      width={400}
-                      height={192}
-                      className="w-full h-auto"
-                    />
+                  <img
+                    src={getImagePath(item.image)}
+                    alt={`GIM ${item.year} - ${item.title}`}
+                    width={400}
+                    height={192}
+                    className="w-full h-auto"
+                  />
                   </div>
                 </div>
               </div>

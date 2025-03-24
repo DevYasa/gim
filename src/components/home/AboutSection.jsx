@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import { FaGem, FaUserGraduate, FaBriefcase, FaCertificate } from 'react-icons/fa'
+import { getImagePath } from '@/utils/imageUtils';
 
 const AboutSection = () => {
   const features = [
@@ -44,17 +45,17 @@ const AboutSection = () => {
           <div className="reveal img-hover-zoom rounded-lg overflow-hidden shadow-xl">
             {/* Image placeholder while loading */}
             <div className="relative bg-neutral-200 w-full aspect-[4/3]">
-              <LazyLoadImage
-                src="/images/home/about-bg.jpg"
-                alt="About GIM"
-                effect="blur"
-                width={600}  // Define width
-                height={450} // Define height
-                placeholderSrc="/images/placeholder.jpg" // Optional low-res placeholder
-                className="w-full h-full object-cover"
-                wrapperClassName="w-full h-full"
-                threshold={200} // Start loading when 200px away
-              />
+            <LazyLoadImage
+              src={getImagePath("/images/home/about-bg.jpg")}
+              alt="About GIM"
+              effect="blur"
+              width={600}
+              height={450}
+              placeholderSrc={getImagePath("/images/placeholder.jpg")}
+              className="w-full h-full object-cover"
+              wrapperClassName="w-full h-full"
+              threshold={200}
+            />
             </div>
           </div>
 
