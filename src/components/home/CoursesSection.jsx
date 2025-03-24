@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import SectionTitle from '../shared/SectionTitle'
 import { courses } from '../../constants/courses'
+import { getImagePath } from '@/utils/imageUtils';
 
 const CoursesSection = () => {
   const [hoveredCard, setHoveredCard] = useState(null)
@@ -38,7 +39,7 @@ const CoursesSection = () => {
             >
               <div className="relative overflow-hidden h-48">
                 <LazyLoadImage
-                  src={course.image}
+                  src={getImagePath(course.image)}
                   alt={course.title}
                   effect="blur"
                   className="w-full h-full object-cover transition-transform duration-500"
