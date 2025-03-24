@@ -5,32 +5,29 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: write  # Add this line at the top level
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false  # Add this line
-
-      - name: Set up Node.js
+        
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 22
-
+          
       - name: Install dependencies
         run: npm ci
-
+        
       - name: Build
         run: npm run build
-
+        
+      - name: Create .nojekyll file
+        run: touch dist/.nojekyll
+        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
           branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}  # Add this line

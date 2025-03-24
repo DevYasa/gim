@@ -10,7 +10,13 @@ export default defineConfig({
   ],
   
   base: '/gim/',
-
+  
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true,
+  },
+  
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
