@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect, lazy, Suspense, useState } from 'react'
 import Navbar from './components/shared/Navbar'
 import Footer from './components/shared/Footer'
+import { getImagePath } from './utils/imageUtils'
 
 // Lazy-loaded pages for better performance with explicit chunk names
 const HomePage = lazy(() => import(/* webpackChunkName: "home" */ './pages/HomePage'))
@@ -11,7 +12,23 @@ const CourseDetailPage = lazy(() => import(/* webpackChunkName: "course-detail" 
 const AboutPage = lazy(() => import(/* webpackChunkName: "about" */ './pages/AboutPage'))
 const ContactPage = lazy(() => import(/* webpackChunkName: "contact" */ './pages/ContactPage'))
 
-// Loading component for suspense fallback
+// Loader component that now includes the initial loader
+const Loader = () => {
+  return (
+    <div className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
+      <img 
+        src={getImagePath('/images/logo1.png')} 
+        alt="GIM Logo" 
+        className="w-44 h-auto animate-pulse"
+      />
+      <div className="w-36 h-0.5 mt-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400 to-transparent animate-shimmer"></div>
+      </div>
+    </div>
+  )
+}
+
+// Loading component for suspense fallback (simpler version)
 const Loading = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="w-16 h-16 border-4 border-primary border-solid rounded-full border-t-transparent animate-spin"></div>
@@ -34,36 +51,41 @@ const ErrorFallback = () => (
 
 function App() {
   const location = useLocation()
+  const [isLoading, setIsLoading] = useState(true)
   const [isLoaded, setIsLoaded] = useState(false)
   
-  // Handle page load complete
+  // Handle initial page load with a minimum display time
   useEffect(() => {
+    const minimumLoadTime = 2500; // 2.5 seconds
+    const startTime = Date.now();
+    
     const handleLoad = () => {
-      setIsLoaded(true)
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, minimumLoadTime - elapsedTime);
       
-      // Add a class to body to indicate the page is loaded
-      document.body.classList.add('page-loaded')
-      
-      // Remove initial loader after app has loaded
-      const initialLoader = document.getElementById('initial-loader')
-      if (initialLoader) {
-        initialLoader.style.display = 'none'
-      }
-    }
+      // Wait for minimum time
+      setTimeout(() => {
+        setIsLoading(false);
+        setIsLoaded(true);
+        
+        // Add a class to body to indicate the page is loaded
+        document.body.classList.add('page-loaded');
+      }, remainingTime);
+    };
     
     // Set loaded state when window loads
     if (document.readyState === 'complete') {
-      handleLoad()
+      handleLoad();
     } else {
-      window.addEventListener('load', handleLoad)
-      return () => window.removeEventListener('load', handleLoad)
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
     }
-  }, [])
+  }, []);
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Reveal animations on scroll with improved reliability
   useEffect(() => {
@@ -118,45 +140,48 @@ function App() {
     return () => clearTimeout(setupObserver)
   }, [isLoaded])
 
-  // Get the base URL from the environment
-  const basename = import.meta.env.BASE_URL || '/'
-
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={
-              <ErrorBoundary fallback={<ErrorFallback />}>
-                <HomePage />
-              </ErrorBoundary>
-            } />
-            <Route path="/courses" element={
-              <ErrorBoundary fallback={<ErrorFallback />}>
-                <CoursesPage />
-              </ErrorBoundary>
-            } />
-            <Route path="/courses/:id" element={
-              <ErrorBoundary fallback={<ErrorFallback />}>
-                <CourseDetailPage />
-              </ErrorBoundary>
-            } />
-            <Route path="/about" element={
-              <ErrorBoundary fallback={<ErrorFallback />}>
-                <AboutPage />
-              </ErrorBoundary>
-            } />
-            <Route path="/contact" element={
-              <ErrorBoundary fallback={<ErrorFallback />}>
-                <ContactPage />
-              </ErrorBoundary>
-            } />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
+    <>
+      {/* Initial Loader */}
+      {isLoading && <Loader />}
+      
+      {/* Main App */}
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route path="/" element={
+                <ErrorBoundary fallback={<ErrorFallback />}>
+                  <HomePage />
+                </ErrorBoundary>
+              } />
+              <Route path="/courses" element={
+                <ErrorBoundary fallback={<ErrorFallback />}>
+                  <CoursesPage />
+                </ErrorBoundary>
+              } />
+              <Route path="/courses/:id" element={
+                <ErrorBoundary fallback={<ErrorFallback />}>
+                  <CourseDetailPage />
+                </ErrorBoundary>
+              } />
+              <Route path="/about" element={
+                <ErrorBoundary fallback={<ErrorFallback />}>
+                  <AboutPage />
+                </ErrorBoundary>
+              } />
+              <Route path="/contact" element={
+                <ErrorBoundary fallback={<ErrorFallback />}>
+                  <ContactPage />
+                </ErrorBoundary>
+              } />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+      </div>
+    </>
   )
 }
 
